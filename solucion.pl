@@ -33,7 +33,7 @@ disciplina(huidaDeDepredador, ["correr", "olfatear"], [0,0,80]).
 disciplina(preparacionDeEnsalada, ["olfatear", "saltar", "contabilidad hogareña"], [0,0,0]).
 disciplina(trepadaDeLigustrina, ["saltar", "correr", "trepar"], [0,0,0]).
 disciplina(invasionDeCasas, [], [50,90,0]).
-disciplina(revolverBasura, ["olfatear", "correr"], [0,0,50]).
+disciplina(revolverBasura, ["correr", "olfatear"], [0,0,50]).
 disciplina(cebarMate, ["olfatear"], [0,0,0]).
 
 
