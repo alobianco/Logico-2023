@@ -22,19 +22,29 @@ test("Armado de Madriguera no es difícil",fail):-
 
 
 /*
-%Carpinchos pueden realizar disciplinas
+    4.	Casos de pruebas
+        i.	Dieguito puede trepar ligustrina
+        ii.	Kike no  puede revolver basura
+        iii.	Sofy puede invadir casas
+*/
+
+% Carpinchos pueden realizar disciplinas
+
 :- begin_tests(puedeRealizarDisciplina).
 
 test("Dieguito puede trepar ligustrina"):-
-    participaEnDisciplina(dieguito, trepadaDeLigustrina).
+    puedeRealizarDisciplina(dieguito, trepadaDeLigustrina).
 test("Kike no puede revolver basura", fail):-
-    participaEnDisciplina(kike, revolverBasura).
+    puedeRealizarDisciplina(kike, revolverBasura).
 test("Sofy puede invadir casas"):-
-    participaEnDisciplina(sofy, invasionDeCasas).
+    puedeRealizarDisciplina(sofy, invasionDeCasas).
 
 :- end_tests(puedeRealizarDisciplina).
 
-%Carpinchos extraños
+
+/*
+
+% Carpinchos extraños
 :- begin_tests(carpinchoExtranio).
 
 test("Contu es extrania", nondet):-
@@ -44,7 +54,7 @@ test("Nacho no es extranio", fail):-
 
 :- end_tests(carpinchoExtranio).
 
-%Quien Gana?
+% Quien Gana?
 :- begin_tests(quienGanaEn).
 
 test("Nacho le gana a Alancito en cebar mate",nondet):-
@@ -54,7 +64,7 @@ test("Sofy le gana a Contu en Salto con ramita",nondet):-
 
 :- end_tests(quienGanaEn).
 
-%Entrenamiento de carpinchos
+% Entrenamiento de carpinchos
 :- begin_tests(entrenamientoDeCarpinchos).
 
 test("Despues de levantar 20 kilos Kike tiene 105 de fuerza"):-
@@ -68,7 +78,7 @@ test("dieguito hizo carssfit durante 25 minutos y ahora tiene [124,124,30] de At
 
 :- end_tests(entrenamientoDeCarpinchos).
 
-%A cuantos le gana cada uno?
+% A cuantos le gana cada uno?
 :- begin_tests(aCuantosLeGana).
 
 test("Nacho le gana a 5 carpinchos en cebar mate"):-
@@ -80,7 +90,7 @@ test("Sofy le gana a 6 carpinchos en revolver basura"):-
 
 :- end_tests(aCuantosLeGana).
 
-%Gana todas las disciplinas
+% Gana todas las disciplinas
 :- begin_tests(laRompeEn).
 
 test("Sofy la rompe en revolver basura y en huida de depredador"):-

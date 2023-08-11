@@ -55,9 +55,38 @@ disciplinaEsDificil(Nombre):-
         sum_list(RestriccionAtributos,Puntos),
         (Cantidad > 2;Puntos > 100).
 
+
+/*
+        
+4.	Implementar un predicado que relacione el nombre de un carpincho 
+        y el nombre de una disciplina, si el primero puede realizarla.
+
+Notas del apunte:
+
+    subset: indica si un conjunto es subcnjunto de un conjunto
+    subset([1, 2], [1, 2, 3]).
+    true.
+
+*/
+
+puedeRealizarDisciplina(Carpincho, Disciplina) :-
+    carpincho(Carpincho, Habilidades, Atributos),
+    disciplina(Disciplina, RestriccionHabilidades, RestriccionAtributos),
+    cumpleHabilidades(Habilidades, RestriccionHabilidades),
+    cumpleAtributos(Atributos,RestriccionAtributos).
+ 
+cumpleAtributos([], []).
+cumpleAtributos([HeadAtributoCarpincho | Atributos], [HeadAtributoRestriccion | AtributosRestricciones]):-
+    HeadAtributoCarpincho >= HeadAtributoRestriccion,
+    cumpleAtributos(Atributos, AtributosRestricciones).
+
+cumpleHabilidades(HabilidadesCarpincho,HabilidadesRestriccion):-
+    intersection(HabilidadesCarpincho, HabilidadesRestriccion, ListaIntersecta),
+    ListaIntersecta = HabilidadesRestriccion.
+
+
 /*==========================================================================================*/
 
-%Implementar un predicado que relacione el nombre de un carpincho y el nombre de una disciplina, si el primero puede realizarla.
 participaEnDisciplina(NombreCarpincho, cebarMate):-
     carpincho(NombreCarpincho, HabilidadesCarpincho, AtributosCarpincho),
     disciplina(cebarMate, HabilidadesPedidas, AtributosPedidos),
@@ -71,18 +100,6 @@ participaEnDisciplina(NombreCarpincho, NombreDisciplina):-
     NombreDisciplina \= cebarMate,
     cumpleHabilidades(HabilidadesCarpincho, HabilidadesPedidas),
     cumpleAtributos(AtributosCarpincho, AtributosPedidos).
-
-cumpleHabilidades(HabilidadesCarpincho,HabilidadesPedidas):-
-    intersection(HabilidadesCarpincho, HabilidadesPedidas, ListaIntersecta),
-    ListaIntersecta = HabilidadesPedidas.
-
-cumpleAtributos([], []).
-cumpleAtributos([PrimerAtributoCarpincho | Atributos], [PrimerAtributoPedido | AtributosPedidos]):-
-    PrimerAtributoCarpincho >= PrimerAtributoPedido,
-    cumpleAtributos(Atributos, AtributosPedidos).
-
-
-
 
 
 %Saber si un carpincho es extraño a partir de su nombre, esto pasa cuando todas las disciplinas que puede realizar son difíciles.
