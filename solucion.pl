@@ -37,6 +37,27 @@ disciplina(revolverBasura, ["olfatear", "correr"], [0,0,50]).
 disciplina(cebarMate, ["olfatear"], [0,0,0]).
 
 
+/*
+3.	Saber si una disciplina, dada su nombre, es difícil: 
+    Esto ocurre cuando se requieren más de 2 habilidades, 
+    o bien suma más de 100 puntos de atributos en los requerimientos.
+
+○	Casos de pruebas
+    i.	Trepada de Ligustrina es una disciplina difícil
+    ii.	Invasión de casas es una disciplina difícil
+    iii.	Armado de Madriguera no es difícil
+*/
+
+disciplinaEsDificil(Nombre):-
+    disciplina(Nombre,RestriccionHabilidades,_),
+    length(RestriccionHabilidades,Cantidad),
+    Cantidad > 2.
+    
+disciplinaEsDificil(Nombre):-
+    disciplina(Nombre,_,RestriccionAtributos),
+    sum_list(RestriccionAtributos,Puntos),
+    Puntos > 100.
+    
 
 %Implementar un predicado que relacione el nombre de un carpincho y el nombre de una disciplina, si el primero puede realizarla.
 participaEnDisciplina(NombreCarpincho, cebarMate):-
@@ -63,15 +84,7 @@ cumpleAtributos([PrimerAtributoCarpincho | Atributos], [PrimerAtributoPedido | A
     cumpleAtributos(Atributos, AtributosPedidos).
 
 
-%Saber si una disciplina, dada su nombre, es difícil: Esto ocurre cuando se requieren más de 2 habilidades, o bien suma más de 100 puntos de atributos en los requerimientos.
-disciplinaDificil(NombreDisciplina):-
-    disciplina(NombreDisciplina,HabilidadesPedidas,_),
-    length(HabilidadesPedidas,3).
-    
-disciplinaDificil(NombreDisciplina):-
-    disciplina(NombreDisciplina,_,AtributosPedidos),
-    sum_list(AtributosPedidos,SumaTotal),
-    SumaTotal > 100.
+
 
 
 %Saber si un carpincho es extraño a partir de su nombre, esto pasa cuando todas las disciplinas que puede realizar son difíciles.
@@ -79,7 +92,7 @@ disciplinaDificil(NombreDisciplina):-
 extranio(Carpincho):-
     carpincho(Carpincho,_,_),
     findall(Disciplina, participaEnDisciplina(Carpincho, Disciplina), ListaDisciplinas),
-    maplist(disciplinaDificil, ListaDisciplinas).
+    maplist(disciplinaEsDificil, ListaDisciplinas).
 
 
 %Ganador de disciplinas

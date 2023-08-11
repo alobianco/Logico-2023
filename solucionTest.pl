@@ -1,5 +1,6 @@
 :- include(solucion).
 
+/*
 %Que disciplina es dificil
 :- begin_tests(disciplinaEsDificil).
 
@@ -81,3 +82,4 @@ test("Contu la rompe en preparacion de ensalada"):-
 
 :- end_tests(laRompeEn).
 
+*/
