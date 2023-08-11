@@ -8,9 +8,10 @@ Integrantes:
 /*
 1.	Modelar con functores a cada uno de los carpinchos 
     y definir un predicado para indicar la existencia y poder usar de generador.
+
 */
 
-existeCarpincho(Nombre) :- carpincho(Nombre, _, _).
+%carpincho(Nombre,Habilidades,Atributos).
 
 carpincho(kike, ["saltar", "correr"], [100,50,40]).
 carpincho(nacho, ["olfatear", "saltar"], [60,80,80]).
@@ -20,16 +21,22 @@ carpincho(sofy, ["saltar", "correr", "olfatear"], [100,90,100]).
 carpincho(dieguito, ["saltar", "correr", "trepar"], [99,99,80]).
 carpincho(contu, ["olfatear", "saltar", "contabilidad hogareña", lavar], [60,70,60]).
 
+existeCarpincho(Nombre) :- carpincho(Nombre, _, _).
 
-%disciplina(Nombre, [HabilidadesRequeridos], [AtributosRequeridos])
-disciplina(saltoConRamita, [saltar, correr],[0,0,0]).
+/*
+2.	Modelar las disciplinas en relación a sus restricciones.
+*/
+%disciplina(Nombre, RestriccionHabilidades, RestriccionAtributos).
+disciplina(saltoConRamita, ["saltar", "correr"],[0,0,0]).
 disciplina(armadoDeMadriguera, [], [70,0,0]).
-disciplina(huidaDeDepredador, [correr, olfatear], [0,0,80]).
-disciplina(preparacionDeEnsalada, [olfatear, saltar, "contabilidad hogarenia"], [0,0,0]).
-disciplina(trepadaDeLigustrina, [saltar, correr, trepar], [0,0,0]).
+disciplina(huidaDeDepredador, ["correr", "olfatear"], [0,0,80]).
+disciplina(preparacionDeEnsalada, ["olfatear", "saltar", "contabilidad hogareña"], [0,0,0]).
+disciplina(trepadaDeLigustrina, ["saltar", "correr", "trepar"], [0,0,0]).
 disciplina(invasionDeCasas, [], [50,90,0]).
-disciplina(revolverBasura, [correr, olfatear], [0,0,50]).
-disciplina(cebarMate, [olfatear], [0,0,0]).
+disciplina(revolverBasura, ["olfatear", "correr"], [0,0,50]).
+disciplina(cebarMate, ["olfatear"], [0,0,0]).
+
+
 
 %Implementar un predicado que relacione el nombre de un carpincho y el nombre de una disciplina, si el primero puede realizarla.
 participaEnDisciplina(NombreCarpincho, cebarMate):-
