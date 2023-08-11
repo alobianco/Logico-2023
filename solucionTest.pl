@@ -34,6 +34,16 @@ test("Nacho no es extranio", fail):-
 
 :- end_tests(carpinchoExtranio).
 
+%Quien Gana?
+:- begin_tests(quienGanaEn).
+
+test("Nacho le gana a Alancito en cebar mate",nondet):-
+    quienGanaEn(nacho,alancito,cebarMate, nacho).
+test("Sofy le gana a Contu en Salto con ramita",nondet):-
+    quienGanaEn(sofy,contu,saltoConRamita,sofy).
+
+:- end_tests(quienGanaEn).
+
 %Entrenamiento de carpinchos
 :- begin_tests(entrenamientoDeCarpinchos).
 
@@ -48,5 +58,26 @@ test("dieguito hizo carssfit durante 25 minutos y ahora tiene [124,124,30] de At
 
 :- end_tests(entrenamientoDeCarpinchos).
 
+%A cuantos le gana cada uno?
+:- begin_tests(aCuantosLeGana).
 
+test("Nacho le gana a 5 carpinchos en cebar mate"):-
+    aCuantosLeGana(nacho,cebarMate, 5).
+test("Kike le gana a 4 carpinchos en Salto con ramita"):-
+    aCuantosLeGana(kike,saltoConRamita,4).
+test("Sofy le gana a 6 carpinchos en revolver basura"):-
+    aCuantosLeGana(sofy,revolverBasura,6).
+
+:- end_tests(aCuantosLeGana).
+
+%Gana todas las disciplinas
+:- begin_tests(laRompeEn).
+
+test("Sofy la rompe en revolver basura y en huida de depredador"):-
+    laRompeEn(sofy,revolverBasura),
+    laRompeEn(sofy,huidaDeDepredador).
+test("Contu la rompe en preparacion de ensalada"):-
+    laRompeEn(contu,preparacionDeEnsalada).
+
+:- end_tests(laRompeEn).
 

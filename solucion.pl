@@ -19,7 +19,7 @@ carpincho(contu, [olfatear, saltar, "contabilidad hogarenia", lavar], [60,70,60]
 %disciplina(Nombre, [HabilidadesRequeridos], [AtributosRequeridos])
 disciplina(saltoConRamita, [saltar, correr],[0,0,0]).
 disciplina(armadoDeMadriguera, [], [70,0,0]).
-disciplina(huidaDeDepredador, [correr,olfatear], [0,0,80]).
+disciplina(huidaDeDepredador, [correr, olfatear], [0,0,80]).
 disciplina(preparacionDeEnsalada, [olfatear, saltar, "contabilidad hogarenia"], [0,0,0]).
 disciplina(trepadaDeLigustrina, [saltar, correr, trepar], [0,0,0]).
 disciplina(invasionDeCasas, [], [50,90,0]).
@@ -71,6 +71,37 @@ extranio(Carpincho):-
 
 
 %Ganador de disciplinas
+quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+    carpincho(Carpincho1,_,AtributosCarpincho1),
+    carpincho(Carpincho2,_,AtributosCarpincho2),
+    participaEnDisciplina(Carpincho1,Disciplina),
+    participaEnDisciplina(Carpincho2,Disciplina),
+    sum_list(AtributosCarpincho1, ListaSumada1),
+    sum_list(AtributosCarpincho2, ListaSumada2),
+    (ListaSumada1 > ListaSumada2 -> Ganador = Carpincho1;
+     ListaSumada2 > ListaSumada1 -> Ganador = Carpincho2).
+
+quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+    carpincho(Carpincho1,_,_),
+    carpincho(Carpincho2,_,_),
+    participaEnDisciplina(Carpincho1,Disciplina),
+    not(participaEnDisciplina(Carpincho2,Disciplina)),
+    Ganador = Carpincho1.
+
+quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+    carpincho(Carpincho1,_,_),
+    carpincho(Carpincho2,_,_),
+    not(participaEnDisciplina(Carpincho1,Disciplina)),
+    participaEnDisciplina(Carpincho2,Disciplina),
+    Ganador = Carpincho2.
+
+quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+    carpincho(Carpincho1,_,_),
+    carpincho(Carpincho2,_,_),
+    not(participaEnDisciplina(Carpincho1,Disciplina)),
+    not(participaEnDisciplina(Carpincho2,Disciplina)),
+    Ganador = ninguno.
+
 
 %Entrenamiento
 pesasCarpinchas(Carpincho, PesasLevantadas, carpincho(Carpincho,_,[NuevaFuerza,Destreza,Velocidad])):-
@@ -93,3 +124,20 @@ carssfit(Carpincho, MinutosEntrenados, carpincho(Carpincho,_,[NuevaFuerza,NuevaD
 
 
 %A Cuantos le gana
+aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
+    carpincho(Carpincho, _, _),
+    disciplina(Disciplina, _, _),
+    findall(Carpincho2, (carpincho(Carpincho2, _, _),Carpincho \= Carpincho2,quienGanaEn(Carpincho, Carpincho2, Disciplina, Carpincho)), Resultados),
+    length(Resultados, Cantidad).
+
+laRompeEn(Carpincho, Disciplina):-
+    carpincho(Carpincho,_,_),
+    disciplina(Disciplina,_,_),
+    aCuantosLeGana(Carpincho, Disciplina, Cantidad),
+    Cantidad = 6.
+
+
+
+
+    
+
