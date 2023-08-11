@@ -3,18 +3,23 @@ Solución TP de logico
 Integrantes:
  - Integrante 1
  - Integrante 2
- - Integrante 3
- - Integrante 4
 */
 
-%atleta(Nombre, [Habilidades], [Fuerza, Destreza, Velocidad]).
-carpincho(kike, [saltar, correr], [100,50,40]).
-carpincho(nacho, [olfatear, saltar], [60,80,80]).
-carpincho(alancito, [correr], [80,80,70]).
-carpincho(gastoncito, [olfatear], [100,30,20]).
-carpincho(sofy, [saltar, correr, olfatear], [100,90,100]).
-carpincho(dieguito, [saltar, correr, trepar], [99,99,80]).
-carpincho(contu, [olfatear, saltar, "contabilidad hogarenia", lavar], [60,70,60]).
+/*
+1.	Modelar con functores a cada uno de los carpinchos 
+    y definir un predicado para indicar la existencia y poder usar de generador.
+*/
+
+existeCarpincho(Nombre) :- carpincho(Nombre, _, _).
+
+carpincho(kike, ["saltar", "correr"], [100,50,40]).
+carpincho(nacho, ["olfatear", "saltar"], [60,80,80]).
+carpincho(alancito, ["correr"], [80,80,70]).
+carpincho(gastoncito, ["olfatear"], [100,30,20]).
+carpincho(sofy, ["saltar", "correr", "olfatear"], [100,90,100]).
+carpincho(dieguito, ["saltar", "correr", "trepar"], [99,99,80]).
+carpincho(contu, ["olfatear", "saltar", "contabilidad hogareña", lavar], [60,70,60]).
+
 
 %disciplina(Nombre, [HabilidadesRequeridos], [AtributosRequeridos])
 disciplina(saltoConRamita, [saltar, correr],[0,0,0]).
