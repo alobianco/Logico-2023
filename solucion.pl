@@ -46,18 +46,16 @@ disciplina(cebarMate, ["olfatear"], [0,0,0]).
     i.	Trepada de Ligustrina es una disciplina difícil
     ii.	Invasión de casas es una disciplina difícil
     iii.	Armado de Madriguera no es difícil
+
 */
 
 disciplinaEsDificil(Nombre):-
-    disciplina(Nombre,RestriccionHabilidades,_),
+    disciplina(Nombre,RestriccionHabilidades,RestriccionAtributos),
     length(RestriccionHabilidades,Cantidad),
-    Cantidad > 2.
-    
-disciplinaEsDificil(Nombre):-
-    disciplina(Nombre,_,RestriccionAtributos),
     sum_list(RestriccionAtributos,Puntos),
-    Puntos > 100.
-    
+    (Cantidad > 2;Puntos > 100).
+
+/*==========================================================================================*/
 
 %Implementar un predicado que relacione el nombre de un carpincho y el nombre de una disciplina, si el primero puede realizarla.
 participaEnDisciplina(NombreCarpincho, cebarMate):-
