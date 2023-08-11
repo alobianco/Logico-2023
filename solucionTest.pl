@@ -1,13 +1,9 @@
 :- include(solucion).
-
-
 /*  3.
-	
     Casos de pruebas
     i.	Trepada de Ligustrina es una disciplina difícil
     ii.	Invasión de casas es una disciplina difícil
     iii.	Armado de Madriguera no es difícil
-
 */
 :- begin_tests(disciplinaEsDificil).
 
@@ -19,17 +15,12 @@ test("Armado de Madriguera no es difícil",fail):-
     disciplinaEsDificil(armadoDeMadriguera).
 
 :- end_tests(disciplinaEsDificil).
-
-
 /*
     4.	Casos de pruebas
         i.	Dieguito puede trepar ligustrina
         ii.	Kike no  puede revolver basura
         iii.	Sofy puede invadir casas
 */
-
-% Carpinchos pueden realizar disciplinas
-
 :- begin_tests(puedeRealizarDisciplina).
 
 test("Dieguito puede trepar ligustrina"):-
@@ -40,20 +31,21 @@ test("Sofy puede invadir casas"):-
     puedeRealizarDisciplina(sofy, invasionDeCasas).
 
 :- end_tests(puedeRealizarDisciplina).
+/*
+5. ○	Casos de pruebas
+    i.	Contu es extraña
+    ii.	Nacho no es extraño
+*/
+:- begin_tests(esEstranio).
 
+test("Contu es extraña", nondet):-
+    esEstranio(contu).
+test("Nacho no es extranio", fail):-
+    esEstranio(nacho).
+    
+:- end_tests(esEstranio).
 
 /*
-
-% Carpinchos extraños
-:- begin_tests(carpinchoExtranio).
-
-test("Contu es extrania", nondet):-
-    extranio(contu).
-test("Nacho no es extranio", fail):-
-    extranio(nacho).
-
-:- end_tests(carpinchoExtranio).
-
 % Quien Gana?
 :- begin_tests(quienGanaEn).
 

@@ -85,6 +85,19 @@ cumpleHabilidades(HabilidadesCarpincho,HabilidadesRestriccion):-
     ListaIntersecta = HabilidadesRestriccion.
 
 
+/*
+
+5.	Saber si un carpincho es extraño a partir de su nombre, 
+    esto pasa cuando todas las disciplinas que puede realizar son difíciles.
+    ○	Casos de pruebas
+        i.	Contu es extraña
+        ii.	Nacho no es extraño
+*/
+
+esEstranio(Carpincho):-
+    puedeRealizarDisciplina(Carpincho,Disciplina),
+    disciplinaEsDificil(Disciplina).
+
 /*==========================================================================================*/
 
 participaEnDisciplina(NombreCarpincho, cebarMate):-
@@ -102,12 +115,6 @@ participaEnDisciplina(NombreCarpincho, NombreDisciplina):-
     cumpleAtributos(AtributosCarpincho, AtributosPedidos).
 
 
-%Saber si un carpincho es extraño a partir de su nombre, esto pasa cuando todas las disciplinas que puede realizar son difíciles.
-
-extranio(Carpincho):-
-    carpincho(Carpincho,_,_),
-    findall(Disciplina, participaEnDisciplina(Carpincho, Disciplina), ListaDisciplinas),
-    maplist(disciplinaEsDificil, ListaDisciplinas).
 
 
 %Ganador de disciplinas
