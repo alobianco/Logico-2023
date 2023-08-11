@@ -51,9 +51,9 @@ disciplina(cebarMate, ["olfatear"], [0,0,0]).
 
 disciplinaEsDificil(Nombre):-
     disciplina(Nombre,RestriccionHabilidades,RestriccionAtributos),
-    length(RestriccionHabilidades,Cantidad),
-    sum_list(RestriccionAtributos,Puntos),
-    (Cantidad > 2;Puntos > 100).
+        length(RestriccionHabilidades,Cantidad),
+        sum_list(RestriccionAtributos,Puntos),
+        (Cantidad > 2;Puntos > 100).
 
 /*==========================================================================================*/
 

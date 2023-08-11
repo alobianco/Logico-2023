@@ -1,18 +1,27 @@
 :- include(solucion).
 
-/*
-%Que disciplina es dificil
+
+/*  3.
+	
+    Casos de pruebas
+    i.	Trepada de Ligustrina es una disciplina difícil
+    ii.	Invasión de casas es una disciplina difícil
+    iii.	Armado de Madriguera no es difícil
+
+*/
 :- begin_tests(disciplinaEsDificil).
 
-test("Trepada de Ligustrina es una disciplina dificil", nondet):-
-    disciplinaDificil(trepadaDeLigustrina).
+test("Trepada de Ligustrina es una disciplina difícil", nondet):-
+    disciplinaEsDificil(trepadaDeLigustrina).
 test("Invasión de casas es una disciplina difícil", nondet):-
-    disciplinaDificil(invasionDeCasas).
-test("Armado de Madriguera no es dificil",fail):-
-    disciplinaDificil(armadoDeMadriguera).
+    disciplinaEsDificil(invasionDeCasas).
+test("Armado de Madriguera no es difícil",fail):-
+    disciplinaEsDificil(armadoDeMadriguera).
 
 :- end_tests(disciplinaEsDificil).
 
+
+/*
 %Carpinchos pueden realizar disciplinas
 :- begin_tests(puedeRealizarDisciplina).
 
