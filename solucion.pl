@@ -203,28 +203,35 @@ aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
 */
 
 laRompeEn(Carpincho, Disciplina) :-
-    carpincho(Carpincho, _, _),
-    disciplina(Disciplina, _, _),
-    ganaSiempreEn(Carpincho, Disciplina).
+    aCuantosLeGana(Carpincho, Disciplina, Cantidad),
+    findall(Carp, carpincho(Carp, _, _), TodosLosCarpinchos),
+    length(TodosLosCarpinchos, TotalCarpinchos),
+    Cantidad is TotalCarpinchos - 1.
 
-ganaSiempreEn(Carpincho, Disciplina) :-
-    findall(Carpincho2, 
-        (carpincho(Carpincho2, _, _),Carpincho = Carpincho2,
-        ganador(Carpincho, Carpincho2, Disciplina, Carpincho)), 
-        Resultados),
-    length(Resultados, 0).
-
-/*==========================================================================================*/
 /*
-drinTim([], []).
-drinTim([Disciplina|ColaDisciplina], [Carpincho|ColaCarpincho]):-
-    carpincho(Carpincho,_,_),
-    call(laRompeEn, Disciplina, Carpincho),
-    drinTim(ColaDisciplina, ColaCarpincho).
+    10.	A partir de una lista de nombres de disciplinas, 
+    poder generar un Drintim (un equipo) de carpinchos 
+    donde cada uno de los integrantes sea el ganador indiscutido en cada disciplina, 
+    es decir, el que más gana.
+    Nota: No hace falta que este predicado sea inversible para las disciplinas, sí para el equipo.
+   ○	Casos de pruebas
+    i.	Un drintim para revolver basura y preparación de ensalada está formado por Sofy y Contu.
+    ii.	Un drintim para revolver basura y huida de depredador está formado únicamente por Sofy.
+  */  
 
-*/
+drintim(Disciplinas, Equipo) :-
+    drintimAux(Disciplinas, [], Equipo).
 
+drintimAux([], _, []).
+drintimAux([Disciplina | RestoDisciplinas], CarpinchosYaElegidos, [Carpincho | RestoEquipo]) :-
+    laRompeEn(Carpincho, Disciplina),
+    noEstaEnLista(Carpincho, CarpinchosYaElegidos),
+    drintimAux(RestoDisciplinas, [Carpincho | CarpinchosYaElegidos], RestoEquipo).
+drintimAux([_ | RestoDisciplinas], CarpinchosYaElegidos, Equipo) :-
+    drintimAux(RestoDisciplinas, CarpinchosYaElegidos, Equipo).
 
-
-    
-
+noEstaEnLista(_, []).
+noEstaEnLista(Carpincho, [Cabeza | _]) :-
+    Carpincho \= Cabeza.
+noEstaEnLista(Carpincho, [_ | Cola]) :-
+    noEstaEnLista(Carpincho, Cola).

@@ -111,13 +111,17 @@ test("Contu la rompe en preparacion de ensalada"):-
     laRompeEn(contu,preparacionDeEnsalada).
 
 :- end_tests(laRompeEn).
-
 /*
-:- begin_tests(drinTim).
+ 10 ○	Casos de pruebas
+    i.	Un drintim para revolver basura y preparación de ensalada está formado por Sofy y Contu.
+    ii.	Un drintim para revolver basura y huida de depredador está formado únicamente por Sofy.
+*/
+:- begin_tests(drintim).
 
-test("Sofy la rompe en revolver basura y en huida de depredador",nondet):-
-    drinTim([revolverBasura,preparacionDeEnsalada],[sofy,contu]).
-test("Contu la rompe en preparacion de ensalada",nondet):-
-    drinTim([revolverBasura,huidaDeDepredador],[sofy,sofy]).
+test("Un drintim para revolver basura y preparación de ensalada está formado por Sofy y Contu.",nondet):-
+    drintim([revolverBasura,preparacionDeEnsalada],[sofy,contu]).
 
-:- end_tests(drinTim).*/
+test("Un drintim para revolver basura y huida de depredador está formado únicamente por Sofy.",nondet):-
+    drintim([revolverBasura,huidaDeDepredador],[sofy]).
+
+:- end_tests(drintim). 
