@@ -184,7 +184,6 @@ carssfit(Carpincho, MinutosEntrenados, carpincho(Carpincho,_,[NuevaFuerza,NuevaD
 
 
 /*
-
 8.	Hacer aCuantosLesGana/3. 
     Que relaciona el nombre de un carpincho, nombre de disciplina y la cantidad de carpinchos 
     a los que les gana en esa disciplina.
@@ -196,18 +195,27 @@ aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
     findall(Carpincho2, (carpincho(Carpincho2, _, _),Carpincho \= Carpincho2,ganador(Carpincho, Carpincho2, Disciplina, Carpincho)), Resultados),
     length(Resultados, Cantidad).
 
+
+/*
+9.	Hacer laRompeEn/2, que relaciona el nombre de un carpincho y una disciplina, 
+    si dicho carpincho gana siempre en dicha disciplina.
+
+*/
+
+laRompeEn(Carpincho, Disciplina) :-
+    carpincho(Carpincho, _, _),
+    disciplina(Disciplina, _, _),
+    ganaSiempreEn(Carpincho, Disciplina).
+
+ganaSiempreEn(Carpincho, Disciplina) :-
+    findall(Carpincho2, 
+        (carpincho(Carpincho2, _, _),Carpincho = Carpincho2,
+        ganador(Carpincho, Carpincho2, Disciplina, Carpincho)), 
+        Resultados),
+    length(Resultados, 0).
+
 /*==========================================================================================*/
 /*
-
-
-
-laRompeEn(Disciplina, Carpincho):-
-    carpincho(Carpincho,_,_),
-    disciplina(Disciplina,_,_),
-    aCuantosLeGana(Carpincho, Disciplina, Cantidad),
-    Cantidad = 6.
-
-
 drinTim([], []).
 drinTim([Disciplina|ColaDisciplina], [Carpincho|ColaCarpincho]):-
     carpincho(Carpincho,_,_),

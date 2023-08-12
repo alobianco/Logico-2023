@@ -92,8 +92,16 @@ test("Sofy le gana a 6 en revolver basura"):-
     aCuantosLeGana(sofy,revolverBasura,6).
 
 :- end_tests(aCuantosLeGana).
+
+
 /*
-% Gana todas las disciplinas
+
+ 9.   ○	Casos de pruebas
+    i.	Sofy la rompe en revolver basura y en huida de depredador
+    ii.	Contu la rompe en preparación de ensalada 
+
+*/
+
 :- begin_tests(laRompeEn).
 
 test("Sofy la rompe en revolver basura y en huida de depredador"):-
@@ -104,7 +112,7 @@ test("Contu la rompe en preparacion de ensalada"):-
 
 :- end_tests(laRompeEn).
 
-
+/*
 :- begin_tests(drinTim).
 
 test("Sofy la rompe en revolver basura y en huida de depredador",nondet):-
