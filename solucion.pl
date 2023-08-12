@@ -183,20 +183,23 @@ carssfit(Carpincho, MinutosEntrenados, carpincho(Carpincho,_,[NuevaFuerza,NuevaD
     NuevaVelocidad is (Velocidad - (MinutosEntrenados*2)).
 
 
+/*
+
+8.	Hacer aCuantosLesGana/3. 
+    Que relaciona el nombre de un carpincho, nombre de disciplina y la cantidad de carpinchos 
+    a los que les gana en esa disciplina.
+*/
+
+aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
+    carpincho(Carpincho, _, _),
+    disciplina(Disciplina, _, _),
+    findall(Carpincho2, (carpincho(Carpincho2, _, _),Carpincho \= Carpincho2,ganador(Carpincho, Carpincho2, Disciplina, Carpincho)), Resultados),
+    length(Resultados, Cantidad).
+
 /*==========================================================================================*/
 /*
 
 
-
-
-
-
-%A Cuantos le gana
-aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
-    carpincho(Carpincho, _, _),
-    disciplina(Disciplina, _, _),
-    findall(Carpincho2, (carpincho(Carpincho2, _, _),Carpincho \= Carpincho2,quienGanaEn(Carpincho, Carpincho2, Disciplina, Carpincho)), Resultados),
-    length(Resultados, Cantidad).
 
 laRompeEn(Disciplina, Carpincho):-
     carpincho(Carpincho,_,_),

@@ -60,7 +60,7 @@ test("Sofy le gana a Contu en Salto con ramita",nondet):-
 :- end_tests(ganador).
 
 /*
-   ○	Casos de pruebas
+7. ○	Casos de pruebas
     i.	Desarrollar un caso de prueba para cada uno de los 4 predicados
 */
 :- begin_tests(entrenamientoDeCarpinchos).
@@ -77,18 +77,22 @@ test("dieguito hizo carssfit durante 25 minutos y ahora tiene [124,124,30] de At
 :- end_tests(entrenamientoDeCarpinchos).
 
 /*
-% A cuantos le gana cada uno?
+ 8.   ○	Casos de pruebas
+    i.	Nacho le gana a 5 en cebar mate
+    ii.	Kike le gana a 4 en salto con ramita
+    iii.	Sofy le gana a 6 en revolver basura
+*/
 :- begin_tests(aCuantosLeGana).
 
-test("Nacho le gana a 5 carpinchos en cebar mate"):-
+test("Nacho le gana a 5 en cebar mate"):-
     aCuantosLeGana(nacho,cebarMate, 5).
-test("Kike le gana a 4 carpinchos en Salto con ramita"):-
+test("Kike le gana a 4 en salto con ramita"):-
     aCuantosLeGana(kike,saltoConRamita,4).
-test("Sofy le gana a 6 carpinchos en revolver basura"):-
+test("Sofy le gana a 6 en revolver basura"):-
     aCuantosLeGana(sofy,revolverBasura,6).
 
 :- end_tests(aCuantosLeGana).
-
+/*
 % Gana todas las disciplinas
 :- begin_tests(laRompeEn).
 
