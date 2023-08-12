@@ -98,58 +98,52 @@ esEstranio(Carpincho):-
     puedeRealizarDisciplina(Carpincho,Disciplina),
     disciplinaEsDificil(Disciplina).
 
-/*==========================================================================================*/
 
-participaEnDisciplina(NombreCarpincho, cebarMate):-
-    carpincho(NombreCarpincho, HabilidadesCarpincho, AtributosCarpincho),
-    disciplina(cebarMate, HabilidadesPedidas, AtributosPedidos),
-    cumpleHabilidades(HabilidadesCarpincho, HabilidadesPedidas),
-    not(cumpleHabilidades(HabilidadesCarpincho, [lavar])),
-    cumpleAtributos(AtributosCarpincho, AtributosPedidos).
+/*
+6.	Saber, dados dos carpinchos y el nombre de una disciplina, cuál es el ganador, sabiendo que: 
 
-participaEnDisciplina(NombreCarpincho, NombreDisciplina):-
-    carpincho(NombreCarpincho, HabilidadesCarpincho, AtributosCarpincho),
-    disciplina(NombreDisciplina, HabilidadesPedidas, AtributosPedidos),
-    NombreDisciplina \= cebarMate,
-    cumpleHabilidades(HabilidadesCarpincho, HabilidadesPedidas),
-    cumpleAtributos(AtributosCarpincho, AtributosPedidos).
+    ○	Si los dos pueden realizar la disciplina, gana el que tenga más sumatoria de atributos.
+    ○	Si uno solo puede realizarla, es el ganador.
+    ○	Si ninguno la realiza, ninguno gana.
 
-
-
-
-%Ganador de disciplinas
-quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+    Nota: Pensar... ¿Cuántas cosas se deben relacionar?
+*/
+/*Si los dos pueden realizar la disciplina, gana el que tenga más sumatoria de atributos.*/
+ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     carpincho(Carpincho1,_,AtributosCarpincho1),
     carpincho(Carpincho2,_,AtributosCarpincho2),
-    participaEnDisciplina(Carpincho1,Disciplina),
-    participaEnDisciplina(Carpincho2,Disciplina),
-    sum_list(AtributosCarpincho1, ListaSumada1),
-    sum_list(AtributosCarpincho2, ListaSumada2),
-    (ListaSumada1 > ListaSumada2 -> Ganador = Carpincho1;
-     ListaSumada2 > ListaSumada1 -> Ganador = Carpincho2).
+    puedeRealizarDisciplina(Carpincho1,Disciplina),
+    puedeRealizarDisciplina(Carpincho2,Disciplina),
+    sum_list(AtributosCarpincho1, Sum1),
+    sum_list(AtributosCarpincho2, Sum2),
+    (Sum1 > Sum2 -> Ganador = Carpincho1;
+    Sum2 > Sum1 -> Ganador = Carpincho2).
 
-quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+/*   ○	Si uno solo puede realizarla, es el ganador.*/
+ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     carpincho(Carpincho1,_,_),
     carpincho(Carpincho2,_,_),
-    participaEnDisciplina(Carpincho1,Disciplina),
-    not(participaEnDisciplina(Carpincho2,Disciplina)),
+    puedeRealizarDisciplina(Carpincho1,Disciplina),
+    not(puedeRealizarDisciplina(Carpincho2,Disciplina)),
     Ganador = Carpincho1.
 
-quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     carpincho(Carpincho1,_,_),
     carpincho(Carpincho2,_,_),
-    not(participaEnDisciplina(Carpincho1,Disciplina)),
-    participaEnDisciplina(Carpincho2,Disciplina),
+    not(puedeRealizarDisciplina(Carpincho1,Disciplina)),
+    puedeRealizarDisciplina(Carpincho2,Disciplina),
     Ganador = Carpincho2.
 
-quienGanaEn(Carpincho1, Carpincho2, Disciplina, Ganador):-
+/*Si ninguno la realiza, ninguno gana.*/
+ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     carpincho(Carpincho1,_,_),
     carpincho(Carpincho2,_,_),
-    not(participaEnDisciplina(Carpincho1,Disciplina)),
-    not(participaEnDisciplina(Carpincho2,Disciplina)),
-    Ganador = ninguno.
+    not(puedeRealizarDisciplina(Carpincho1,Disciplina)),
+    not(puedeRealizarDisciplina(Carpincho2,Disciplina)),
+    Ganador = [].
 
-
+/*==========================================================================================*/
+/*
 %Entrenamiento
 pesasCarpinchas(Carpincho, PesasLevantadas, carpincho(Carpincho,_,[NuevaFuerza,Destreza,Velocidad])):-
     carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),

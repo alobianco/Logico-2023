@@ -46,16 +46,20 @@ test("Nacho no es extranio", fail):-
 :- end_tests(esEstranio).
 
 /*
-% Quien Gana?
-:- begin_tests(quienGanaEn).
+6. ○	Casos de pruebas
+    i.	Nacho le gana a Alancito en cebar mate.
+    ii.	Sofy le gana a Contu en salto con ramita.
+*/
+:- begin_tests(ganador).
 
 test("Nacho le gana a Alancito en cebar mate",nondet):-
-    quienGanaEn(nacho,alancito,cebarMate, nacho).
+    ganador(nacho,alancito,cebarMate, nacho).
 test("Sofy le gana a Contu en Salto con ramita",nondet):-
-    quienGanaEn(sofy,contu,saltoConRamita,sofy).
+    ganador(sofy,contu,saltoConRamita,sofy).
 
-:- end_tests(quienGanaEn).
+:- end_tests(ganador).
 
+/*
 % Entrenamiento de carpinchos
 :- begin_tests(entrenamientoDeCarpinchos).
 
