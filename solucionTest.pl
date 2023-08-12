@@ -60,7 +60,9 @@ test("Sofy le gana a Contu en Salto con ramita",nondet):-
 :- end_tests(ganador).
 
 /*
-% Entrenamiento de carpinchos
+   ○	Casos de pruebas
+    i.	Desarrollar un caso de prueba para cada uno de los 4 predicados
+*/
 :- begin_tests(entrenamientoDeCarpinchos).
 
 test("Despues de levantar 20 kilos Kike tiene 105 de fuerza"):-
@@ -74,6 +76,7 @@ test("dieguito hizo carssfit durante 25 minutos y ahora tiene [124,124,30] de At
 
 :- end_tests(entrenamientoDeCarpinchos).
 
+/*
 % A cuantos le gana cada uno?
 :- begin_tests(aCuantosLeGana).
 
@@ -97,7 +100,7 @@ test("Contu la rompe en preparacion de ensalada"):-
 
 :- end_tests(laRompeEn).
 
-*/
+
 :- begin_tests(drinTim).
 
 test("Sofy la rompe en revolver basura y en huida de depredador",nondet):-
@@ -105,4 +108,4 @@ test("Sofy la rompe en revolver basura y en huida de depredador",nondet):-
 test("Contu la rompe en preparacion de ensalada",nondet):-
     drinTim([revolverBasura,huidaDeDepredador],[sofy,sofy]).
 
-:- end_tests(drinTim).
+:- end_tests(drinTim).*/

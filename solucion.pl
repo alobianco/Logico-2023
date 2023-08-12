@@ -142,26 +142,53 @@ ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     not(puedeRealizarDisciplina(Carpincho2,Disciplina)),
     Ganador = [].
 
-/*==========================================================================================*/
 /*
-%Entrenamiento
-pesasCarpinchas(Carpincho, PesasLevantadas, carpincho(Carpincho,_,[NuevaFuerza,Destreza,Velocidad])):-
-    carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
-    NuevaFuerza is (Fuerza + PesasLevantadas/4).
+7.	Durante la cuarentena, nuestros amiguitos estuvieron preparándose 
+    para este gran evento deportivo con distintos entrenamientos. 
+    
+    Implementar los siguientes entrenamientos, que relacionan una cantidad, 
+    un carpincho (completo) a entrenar y el mismo carpincho después de entrenar:
 
+    Nota: No hace falta que estos 4 predicados sean inversibles para ninguno de sus argumentos.
+ 
+
+*/
+
+/* ○	pesasCarpinchas/3: aumenta la fuerza de un carpincho    
+        un cuarto de la cantidad de peso que levantaron.
+*/
+pesasCarpinchas(Carpincho, Peso, carpincho(Carpincho,_,[NuevaFuerza,Destreza,Velocidad])):-
+    carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
+    NuevaFuerza is (Fuerza + (Peso/4)).
+
+/*○	atrapaLaRana/3: aumenta la destreza en igual cantidad que las ranas atrapadas.*/
 atrapaLaRana(Carpincho, RanasAtrapadas, carpincho(Carpincho,_,[Fuerza,NuevaDestreza,Velocidad])):-
     carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
     NuevaDestreza is (Destreza + RanasAtrapadas).
 
+/* ○	cardiopincho/3: aumenta la velocidad el doble de los kilómetros recorridos 
+    (claramente, recorridos en cinta, porque no podían salir a entrenar).*/
+
 cardioPincho(Carpincho, KilometrosRecorridos, carpincho(Carpincho,_,[Fuerza,Destreza,NuevaVelocidad])):-
     carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
-    NuevaVelocidad is (Velocidad + KilometrosRecorridos*2).
+    NuevaVelocidad is (Velocidad + (KilometrosRecorridos*2)).
+
+/*○	carssfit/3: aumenta la destreza y la fuerza en la cantidad de minutos que se entrena, 
+    pero también baja la velocidad el doble de esa cantidad.*/
 
 carssfit(Carpincho, MinutosEntrenados, carpincho(Carpincho,_,[NuevaFuerza,NuevaDestreza,NuevaVelocidad])):-
     carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
     NuevaFuerza is (Fuerza + MinutosEntrenados),
     NuevaDestreza is (Destreza + MinutosEntrenados),
-    NuevaVelocidad is (Velocidad - MinutosEntrenados*2).
+    NuevaVelocidad is (Velocidad - (MinutosEntrenados*2)).
+
+
+/*==========================================================================================*/
+/*
+
+
+
+
 
 
 %A Cuantos le gana
@@ -184,7 +211,7 @@ drinTim([Disciplina|ColaDisciplina], [Carpincho|ColaCarpincho]):-
     call(laRompeEn, Disciplina, Carpincho),
     drinTim(ColaDisciplina, ColaCarpincho).
 
-
+*/
 
 
 
