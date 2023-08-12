@@ -177,11 +177,19 @@ aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
     findall(Carpincho2, (carpincho(Carpincho2, _, _),Carpincho \= Carpincho2,quienGanaEn(Carpincho, Carpincho2, Disciplina, Carpincho)), Resultados),
     length(Resultados, Cantidad).
 
-laRompeEn(Carpincho, Disciplina):-
+laRompeEn(Disciplina, Carpincho):-
     carpincho(Carpincho,_,_),
     disciplina(Disciplina,_,_),
     aCuantosLeGana(Carpincho, Disciplina, Cantidad),
     Cantidad = 6.
+
+
+drinTim([], []).
+drinTim([Disciplina|ColaDisciplina], [Carpincho|ColaCarpincho]):-
+    carpincho(Carpincho,_,_),
+    call(laRompeEn, Disciplina, Carpincho),
+    drinTim(ColaDisciplina, ColaCarpincho).
+
 
 
 

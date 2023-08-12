@@ -94,3 +94,11 @@ test("Contu la rompe en preparacion de ensalada"):-
 :- end_tests(laRompeEn).
 
 */
+:- begin_tests(drinTim).
+
+test("Sofy la rompe en revolver basura y en huida de depredador",nondet):-
+    drinTim([revolverBasura,preparacionDeEnsalada],[sofy,contu]).
+test("Contu la rompe en preparacion de ensalada",nondet):-
+    drinTim([revolverBasura,huidaDeDepredador],[sofy,sofy]).
+
+:- end_tests(drinTim).
