@@ -11,15 +11,15 @@ Integrantes:
 
 */
 
-%carpincho(Nombre,Habilidades,Atributos).
+%carpincho(Nombre,Habilidades,atributos(Fuerza, Destreza, Velocidad)).
 
-carpincho(kike, ["saltar", "correr"], [100,50,40]).
-carpincho(nacho, ["olfatear", "saltar"], [60,80,80]).
-carpincho(alancito, ["correr"], [80,80,70]).
-carpincho(gastoncito, ["olfatear"], [100,30,20]).
-carpincho(sofy, ["saltar", "correr", "olfatear"], [100,90,100]).
-carpincho(dieguito, ["saltar", "correr", "trepar"], [99,99,80]).
-carpincho(contu, ["olfatear", "saltar", "contabilidad hogareña", lavar], [60,70,60]).
+carpincho(kike, ["saltar", "correr"], atributos(100,50,40)).
+carpincho(nacho, ["olfatear", "saltar"], atributos(60,80,80)).
+carpincho(alancito, ["correr"], atributos(80,80,70)).
+carpincho(gastoncito, ["olfatear"], atributos(100,30,20)).
+carpincho(sofy, ["saltar", "correr", "olfatear"], atributos(100,90,100)).
+carpincho(dieguito, ["saltar", "correr", "trepar"], atributos(99,99,80)).
+carpincho(contu, ["olfatear", "saltar", "contabilidad hogareña", "lavar"], atributos(60,70,60)).
 
 existeCarpincho(Nombre) :- carpincho(Nombre, _, _).
 
@@ -27,14 +27,14 @@ existeCarpincho(Nombre) :- carpincho(Nombre, _, _).
 2.	Modelar las disciplinas en relación a sus restricciones.
 */
 %disciplina(Nombre, RestriccionHabilidades, RestriccionAtributos).
-disciplina(saltoConRamita, ["saltar", "correr"],[0,0,0]).
-disciplina(armadoDeMadriguera, [], [70,0,0]).
-disciplina(huidaDeDepredador, ["correr", "olfatear"], [0,0,80]).
-disciplina(preparacionDeEnsalada, ["olfatear", "saltar", "contabilidad hogareña"], [0,0,0]).
-disciplina(trepadaDeLigustrina, ["saltar", "correr", "trepar"], [0,0,0]).
-disciplina(invasionDeCasas, [], [50,90,0]).
-disciplina(revolverBasura, ["correr", "olfatear"], [0,0,50]).
-disciplina(cebarMate, ["olfatear"], [0,0,0]).
+disciplina(saltoConRamita, ["saltar", "correr"],atributos(0,0,0)).
+disciplina(armadoDeMadriguera, [], atributos(70,0,0)).
+disciplina(huidaDeDepredador, ["correr", "olfatear"], atributos(0,0,80)).
+disciplina(preparacionDeEnsalada, ["olfatear", "saltar", "contabilidad hogareña"], atributos(0,0,0)).
+disciplina(trepadaDeLigustrina, ["saltar", "correr", "trepar"], atributos(0,0,0)).
+disciplina(invasionDeCasas, [], atributos(50,90,0)).
+disciplina(revolverBasura, ["correr", "olfatear"], atributos(0,0,50)).
+disciplina(cebarMate, ["olfatear"], atributos(0,0,0)). %nacho, gastoncito, sofy / kike
 
 
 /*
@@ -50,10 +50,14 @@ disciplina(cebarMate, ["olfatear"], [0,0,0]).
 */
 
 disciplinaEsDificil(Nombre):-
-    disciplina(Nombre,RestriccionHabilidades,RestriccionAtributos),
+    disciplina(Nombre,RestriccionHabilidades,atributos(Fuerza,Destreza,Velocidad)),
         length(RestriccionHabilidades,Cantidad),
-        sum_list(RestriccionAtributos,Puntos),
-        (Cantidad > 2;Puntos > 100).
+        sumaAtributos(atributos(Fuerza,Destreza,Velocidad),SumaTotal),
+        (Cantidad > 2;SumaTotal > 100).
+
+
+sumaAtributos(atributos(Fuerza,Destreza,Velocidad), Suma):-
+    Suma is Fuerza + Destreza + Velocidad.
 
 
 /*
@@ -68,17 +72,24 @@ Notas del apunte:
     true.
 
 */
-
-puedeRealizarDisciplina(Carpincho, Disciplina) :-
-    carpincho(Carpincho, Habilidades, Atributos),
-    disciplina(Disciplina, RestriccionHabilidades, RestriccionAtributos),
+puedeRealizarDisciplina(Carpincho, cebarMate):-
+    carpincho(Carpincho, Habilidades, atributos(Fuerza, Destreza, Velocidad)),
+    disciplina(cebarMate, RestriccionHabilidades, atributos(FuerzaRequerida, DestrezaRequerida, VelocidadRequerida)),
     cumpleHabilidades(Habilidades, RestriccionHabilidades),
-    cumpleAtributos(Atributos,RestriccionAtributos).
+    not(cumpleHabilidades(Habilidades, ["lavar"])),
+    cumpleAtributos(atributos(Fuerza, Destreza, Velocidad),atributos(FuerzaRequerida, DestrezaRequerida, VelocidadRequerida)).
+
+puedeRealizarDisciplina(Carpincho, Disciplina):-
+    carpincho(Carpincho, Habilidades, atributos(Fuerza, Destreza, Velocidad)),
+    disciplina(Disciplina, RestriccionHabilidades, atributos(FuerzaRequerida, DestrezaRequerida, VelocidadRequerida)),
+    Disciplina \= cebarMate,
+    cumpleHabilidades(Habilidades, RestriccionHabilidades),
+    cumpleAtributos(atributos(Fuerza, Destreza, Velocidad),atributos(FuerzaRequerida, DestrezaRequerida, VelocidadRequerida)). 
  
-cumpleAtributos([], []).
-cumpleAtributos([HeadAtributoCarpincho | Atributos], [HeadAtributoRestriccion | AtributosRestricciones]):-
-    HeadAtributoCarpincho >= HeadAtributoRestriccion,
-    cumpleAtributos(Atributos, AtributosRestricciones).
+cumpleAtributos(atributos(Fuerza, Destreza, Velocidad),atributos(FuerzaRequerida, DestrezaRequerida, VelocidadRequerida)):-
+    Fuerza >= FuerzaRequerida,
+    Destreza >= DestrezaRequerida,
+    Velocidad >= VelocidadRequerida.
 
 cumpleHabilidades(HabilidadesCarpincho,HabilidadesRestriccion):-
     intersection(HabilidadesCarpincho, HabilidadesRestriccion, ListaIntersecta),
@@ -94,9 +105,11 @@ cumpleHabilidades(HabilidadesCarpincho,HabilidadesRestriccion):-
         ii.	Nacho no es extraño
 */
 
-esEstranio(Carpincho):-
-    puedeRealizarDisciplina(Carpincho,Disciplina),
-    disciplinaEsDificil(Disciplina).
+esExtranio(Carpincho):-
+    carpincho(Carpincho,_,_),
+    findall(Disciplina, puedeRealizarDisciplina(Carpincho,Disciplina), ListaDisciplinas),
+    maplist(disciplinaEsDificil, ListaDisciplinas).    
+    
 
 
 /*
@@ -110,19 +123,21 @@ esEstranio(Carpincho):-
 */
 /*Si los dos pueden realizar la disciplina, gana el que tenga más sumatoria de atributos.*/
 ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
-    carpincho(Carpincho1,_,AtributosCarpincho1),
-    carpincho(Carpincho2,_,AtributosCarpincho2),
+    carpincho(Carpincho1,_,atributos(Fuerza1,Destreza1,Velocidad1)),
+    carpincho(Carpincho2,_,atributos(Fuerza2,Destreza2,Velocidad2)),
+    Carpincho1 \= Carpincho2,
     puedeRealizarDisciplina(Carpincho1,Disciplina),
     puedeRealizarDisciplina(Carpincho2,Disciplina),
-    sum_list(AtributosCarpincho1, Sum1),
-    sum_list(AtributosCarpincho2, Sum2),
-    (Sum1 > Sum2 -> Ganador = Carpincho1;
-    Sum2 > Sum1 -> Ganador = Carpincho2).
+    sumaAtributos(atributos(Fuerza1,Destreza1,Velocidad1),Suma1),
+    sumaAtributos(atributos(Fuerza2,Destreza2,Velocidad2),Suma2),
+    (Suma1 > Suma2 -> Ganador = Carpincho1;
+    Suma2 > Suma1 -> Ganador = Carpincho2).
 
 /*   ○	Si uno solo puede realizarla, es el ganador.*/
 ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     carpincho(Carpincho1,_,_),
     carpincho(Carpincho2,_,_),
+    Carpincho1 \= Carpincho2,
     puedeRealizarDisciplina(Carpincho1,Disciplina),
     not(puedeRealizarDisciplina(Carpincho2,Disciplina)),
     Ganador = Carpincho1.
@@ -130,17 +145,10 @@ ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
 ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
     carpincho(Carpincho1,_,_),
     carpincho(Carpincho2,_,_),
+    Carpincho1 \= Carpincho2,
     not(puedeRealizarDisciplina(Carpincho1,Disciplina)),
     puedeRealizarDisciplina(Carpincho2,Disciplina),
     Ganador = Carpincho2.
-
-/*Si ninguno la realiza, ninguno gana.*/
-ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
-    carpincho(Carpincho1,_,_),
-    carpincho(Carpincho2,_,_),
-    not(puedeRealizarDisciplina(Carpincho1,Disciplina)),
-    not(puedeRealizarDisciplina(Carpincho2,Disciplina)),
-    Ganador = [].
 
 /*
 7.	Durante la cuarentena, nuestros amiguitos estuvieron preparándose 
@@ -157,27 +165,27 @@ ganador(Carpincho1, Carpincho2, Disciplina, Ganador):-
 /* ○	pesasCarpinchas/3: aumenta la fuerza de un carpincho    
         un cuarto de la cantidad de peso que levantaron.
 */
-pesasCarpinchas(Carpincho, Peso, carpincho(Carpincho,_,[NuevaFuerza,Destreza,Velocidad])):-
-    carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
+pesasCarpinchas(Carpincho, Peso, carpincho(Carpincho,_,atributos(NuevaFuerza,Destreza,Velocidad))):-
+    carpincho(Carpincho,_,atributos(Fuerza,Destreza,Velocidad)),
     NuevaFuerza is (Fuerza + (Peso/4)).
 
 /*○	atrapaLaRana/3: aumenta la destreza en igual cantidad que las ranas atrapadas.*/
-atrapaLaRana(Carpincho, RanasAtrapadas, carpincho(Carpincho,_,[Fuerza,NuevaDestreza,Velocidad])):-
-    carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
+atrapaLaRana(Carpincho, RanasAtrapadas, carpincho(Carpincho,_,atributos(Fuerza,NuevaDestreza,Velocidad))):-
+    carpincho(Carpincho,_,atributos(Fuerza,Destreza,Velocidad)),
     NuevaDestreza is (Destreza + RanasAtrapadas).
 
 /* ○	cardiopincho/3: aumenta la velocidad el doble de los kilómetros recorridos 
     (claramente, recorridos en cinta, porque no podían salir a entrenar).*/
 
-cardioPincho(Carpincho, KilometrosRecorridos, carpincho(Carpincho,_,[Fuerza,Destreza,NuevaVelocidad])):-
-    carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
+cardioPincho(Carpincho, KilometrosRecorridos, carpincho(Carpincho,_,atributos(Fuerza,Destreza,NuevaVelocidad))):-
+    carpincho(Carpincho,_,atributos(Fuerza,Destreza,Velocidad)),
     NuevaVelocidad is (Velocidad + (KilometrosRecorridos*2)).
 
 /*○	carssfit/3: aumenta la destreza y la fuerza en la cantidad de minutos que se entrena, 
     pero también baja la velocidad el doble de esa cantidad.*/
 
-carssfit(Carpincho, MinutosEntrenados, carpincho(Carpincho,_,[NuevaFuerza,NuevaDestreza,NuevaVelocidad])):-
-    carpincho(Carpincho,_,[Fuerza,Destreza,Velocidad]),
+carssfit(Carpincho, MinutosEntrenados, carpincho(Carpincho,_,atributos(NuevaFuerza,NuevaDestreza,NuevaVelocidad))):-
+    carpincho(Carpincho,_,atributos(Fuerza,Destreza,Velocidad)),
     NuevaFuerza is (Fuerza + MinutosEntrenados),
     NuevaDestreza is (Destreza + MinutosEntrenados),
     NuevaVelocidad is (Velocidad - (MinutosEntrenados*2)).
@@ -202,11 +210,11 @@ aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
 
 */
 
-laRompeEn(Carpincho, Disciplina) :-
-    aCuantosLeGana(Carpincho, Disciplina, Cantidad),
-    findall(Carp, carpincho(Carp, _, _), TodosLosCarpinchos),
-    length(TodosLosCarpinchos, TotalCarpinchos),
-    Cantidad is TotalCarpinchos - 1.
+laRompeEn(Carpincho, Disciplina) :- 
+    aCuantosLeGana(Carpincho, Disciplina, Cantidad), 
+    findall(Carp, carpincho(Carp, _, _), TodosLosCarpinchos), 
+    length(TodosLosCarpinchos, TotalCarpinchos), 
+    Cantidad is TotalCarpinchos - 1.  
 
 /*
     10.	A partir de una lista de nombres de disciplinas, 
