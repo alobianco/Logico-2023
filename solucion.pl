@@ -1,8 +1,8 @@
 /*
 Solución TP de logico
 Integrantes:
- - Integrante 1
- - Integrante 2
+ - Integrante 1: Agustin Lobianco
+ - Integrante 2: Flavio Milossi
 */
 
 /*
@@ -209,12 +209,19 @@ aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
     si dicho carpincho gana siempre en dicha disciplina.
 
 */
+noGanaEn(Carpincho, Disciplina):-
+    existeCarpincho(Carpincho),
+    existeCarpincho(Rival),
+    Carpincho \= Rival,
+    disciplina(Disciplina,_,_),
+    ganador(Carpincho,Rival,Disciplina,Rival).
+    
+    
+laRompeEn(Carpincho, Disciplina):-
+    existeCarpincho(Carpincho),
+    disciplina(Disciplina,_,_),
+    not(noGanaEn(Carpincho, Disciplina)).
 
-laRompeEn(Carpincho, Disciplina) :- 
-    aCuantosLeGana(Carpincho, Disciplina, Cantidad), 
-    findall(Carp, carpincho(Carp, _, _), TodosLosCarpinchos), 
-    length(TodosLosCarpinchos, TotalCarpinchos), 
-    Cantidad is TotalCarpinchos - 1.  
 
 /*
     10.	A partir de una lista de nombres de disciplinas, 
@@ -227,19 +234,14 @@ laRompeEn(Carpincho, Disciplina) :-
     ii.	Un drintim para revolver basura y huida de depredador está formado únicamente por Sofy.
   */  
 
-drintim(Disciplinas, Equipo) :-
-    drintimAux(Disciplinas, [], Equipo).
 
-drintimAux([], _, []).
-drintimAux([Disciplina | RestoDisciplinas], CarpinchosYaElegidos, [Carpincho | RestoEquipo]) :-
-    laRompeEn(Carpincho, Disciplina),
-    noEstaEnLista(Carpincho, CarpinchosYaElegidos),
-    drintimAux(RestoDisciplinas, [Carpincho | CarpinchosYaElegidos], RestoEquipo).
-drintimAux([_ | RestoDisciplinas], CarpinchosYaElegidos, Equipo) :-
-    drintimAux(RestoDisciplinas, CarpinchosYaElegidos, Equipo).
+equipoEstrella([], []).
+equipoEstrella([Disciplina|ColaDisciplina], [Carpincho|ColaCarpincho]):-
+    carpincho(Carpincho,_,_),
+    call(laRompeEn, Carpincho, Disciplina),
+    equipoEstrella(ColaDisciplina, ColaCarpincho).
 
-noEstaEnLista(_, []).
-noEstaEnLista(Carpincho, [Cabeza | _]) :-
-    Carpincho \= Cabeza.
-noEstaEnLista(Carpincho, [_ | Cola]) :-
-    noEstaEnLista(Carpincho, Cola).
+
+drinTim(Disciplinas, Carpinchos):-
+    equipoEstrella(Disciplinas, Lista),
+    list_to_set(Lista, Carpinchos).
