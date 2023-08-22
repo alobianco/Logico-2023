@@ -107,8 +107,7 @@ cumpleHabilidades(HabilidadesCarpincho,HabilidadesRestriccion):-
 
 esExtranio(Carpincho):-
     carpincho(Carpincho,_,_),
-    findall(Disciplina, puedeRealizarDisciplina(Carpincho,Disciplina), ListaDisciplinas),
-    maplist(disciplinaEsDificil, ListaDisciplinas).    
+    forall(puedeRealizarDisciplina(Carpincho, Disciplina),disciplinaEsDificil(Disciplina)). 
     
 
 
@@ -238,7 +237,7 @@ laRompeEn(Carpincho, Disciplina):-
 equipoEstrella([], []).
 equipoEstrella([Disciplina|ColaDisciplina], [Carpincho|ColaCarpincho]):-
     carpincho(Carpincho,_,_),
-    call(laRompeEn, Carpincho, Disciplina),
+    laRompeEn(Carpincho, Disciplina),
     equipoEstrella(ColaDisciplina, ColaCarpincho).
 
 
