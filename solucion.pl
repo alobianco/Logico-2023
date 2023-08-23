@@ -208,18 +208,11 @@ aCuantosLeGana(Carpincho, Disciplina, Cantidad) :-
     si dicho carpincho gana siempre en dicha disciplina.
 
 */
-noGanaEn(Carpincho, Disciplina):-
-    existeCarpincho(Carpincho),
-    existeCarpincho(Rival),
-    Carpincho \= Rival,
-    disciplina(Disciplina,_,_),
-    ganador(Carpincho,Rival,Disciplina,Rival).
-    
-    
+
 laRompeEn(Carpincho, Disciplina):-
     existeCarpincho(Carpincho),
     disciplina(Disciplina,_,_),
-    not(noGanaEn(Carpincho, Disciplina)).
+    not((ganador(Carpincho, Carpincho2, Disciplina, Carpincho2), Carpincho \= Carpincho2)).
 
 
 /*
